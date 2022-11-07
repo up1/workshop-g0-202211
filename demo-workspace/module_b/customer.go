@@ -24,5 +24,6 @@ func NewCustomer() Customer {
 }
 
 func (c Customer) SayHi() string {
+	c.Id = 9999
 	return "Hello from module B"
 }
