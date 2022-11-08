@@ -13,3 +13,7 @@ func (h Hello) String() string {
 func NewHello(name string) Hello {	
 	return Hello{ Name: name }
 }
+
+func (h Hello) SayHi() string {
+	return "Hello " + h.Name
+}
