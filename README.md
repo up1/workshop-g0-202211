@@ -36,3 +36,16 @@ $go test
 $go test ./...
 $go test ./... -v --cover
 ```
+
+## Day02
+* Go tools
+  * run and build
+  * testing and coverage
+  * field alignment
+  * godoc
+* Go structure
+* Go module system
+* Testing and coverage
+* Stringer interface
+* Defer, panic and recovery
+* Go routine and channel + WaitGroup
