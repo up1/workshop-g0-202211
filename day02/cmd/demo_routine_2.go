@@ -10,11 +10,19 @@ import (
 var wg sync.WaitGroup
 
 func main() {
-	wg.Add(1)
-	go fetch("https://www.google.com")
+	var urls [2]string
+	urls[0] = "https://www.google.com"
+	urls[1] = "https://jsonplaceholder.typicode.com/users"
 
-	wg.Add(1)
-	go fetch("https://jsonplaceholder.typicode.com/users", )
+	for i:=0 ; i<len(urls); i++ {
+		wg.Add(1)
+		go fetch(urls[i])
+	}
+
+	for _, url := range urls {
+		wg.Add(1)
+		go fetch(url)
+	}
 
 	wg.Wait()
 }
