@@ -1,6 +1,9 @@
 package compare
 
-import "encoding/json"
+import (
+	"bytes"
+	"encoding/json"
+)
 
 type Post struct {
 	UserID int64  `json:"userId"`
@@ -13,4 +16,11 @@ func V1() []byte {
 	p := Post{}
 	b, _ := json.Marshal(p)
 	return b
+}
+
+func V2() {
+	p := Post{}
+	var buffer bytes.Buffer
+	enc := json.NewEncoder(&buffer)
+	enc.Encode(p)
 }
