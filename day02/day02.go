@@ -3,7 +3,7 @@ package day02
 import "fmt"
 
 // Hello struct
-type Hello struct{
+type Hello struct {
 	Name string
 }
 
@@ -13,8 +13,8 @@ func (h Hello) String() string {
 }
 
 // Create new Hello
-func NewHello(name string) Hello {	
-	return Hello{ Name: name }
+func NewHello(name string) Hello {
+	return Hello{Name: name}
 }
 
 // SayHi with name

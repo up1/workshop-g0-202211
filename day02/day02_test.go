@@ -23,14 +23,14 @@ func ExampleHello_SayHi() {
 
 func BenchmarkV1SayHi(b *testing.B) {
 	h := day02.NewHello("somkiat")
-    for i := 0; i < b.N; i++ {
+	for i := 0; i < b.N; i++ {
 		h.SayHi()
-    }
+	}
 }
 
 func BenchmarkV2SayHi(b *testing.B) {
 	h := day02.NewHello("somkiat")
-    for i := 0; i < b.N; i++ {
+	for i := 0; i < b.N; i++ {
 		h.SayHi()
-    }
+	}
 }
