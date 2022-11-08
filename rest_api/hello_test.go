@@ -13,7 +13,7 @@ import (
 func TestSuccessWithHello(t *testing.T) {
 	// Setup router
 	app := demo.NewRouter()
-	demo.NewHello(app)
+	demo.NewHello(app, nil)
 
 	// Call Target endpoint
 	req := httptest.NewRequest(http.MethodGet, "/", nil)

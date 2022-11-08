@@ -1,13 +1,18 @@
 package demo
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"go.mongodb.org/mongo-driver/mongo"
+)
 
-func NewHello(app *fiber.App) {
-	app.Get("/", helloHandler)
+func NewHello(app *fiber.App, client *mongo.Client) {
+	app.Get("/", helloHandler(client))
 }
 
-func helloHandler(c *fiber.Ctx) error {
-	return c.JSON(fiber.Map{
-		"message": "Hello API",
-	})
+func helloHandler(client *mongo.Client) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"message": "Hello API",
+		})
+	}
 }
