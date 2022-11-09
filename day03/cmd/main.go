@@ -2,6 +2,7 @@ package main
 
 import (
 	"day03"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -10,7 +11,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+var server = flag.String("server", ":3000", "Host") 
+
 func main() {
+	flag.Parse()
+	p := os.Getenv("PORT")
+	fmt.Println(p, *server)
+
 	app := day03.NewFiberRouter()
 
 	c := make(chan os.Signal, 1)
@@ -24,7 +31,7 @@ func main() {
 	day03.NewHelloRouter(app)
 	app.Get("/panic", withPanic)
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(*server))
 }
 
 func withPanic(c *fiber.Ctx) error {
