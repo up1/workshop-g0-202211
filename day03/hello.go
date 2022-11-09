@@ -22,7 +22,7 @@ type helloSevice struct {
 }
 
 func (s helloSevice) doSth() string {
-	return "Hello World"
+	return s.r.getDataFromDb()
 }
 
 func NewService(r helloRepository) helloSevice {
@@ -30,9 +30,12 @@ func NewService(r helloRepository) helloSevice {
 }
 
 
-
 // Repository
 type helloRepository struct {
+}
+
+func (r helloRepository) getDataFromDb() string {
+	panic("Under construction !!")
 }
 
 
