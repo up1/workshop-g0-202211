@@ -15,6 +15,9 @@ var server = flag.String("server", ":3000", "Host")
 
 func main() {
 	flag.Parse()
+
+	client := day03.NewMongoClient("mongodb://user:pass@128.199.205.113:27017")
+
 	p := os.Getenv("PORT")
 	fmt.Println(p, *server)
 
@@ -29,7 +32,9 @@ func main() {
 	}()
 
 	// init dependency
-	r := day03.HelloRepository{}
+	r := day03.HelloRepository{
+		Client: client,
+	}
 	s := day03.NewService(r)
 
 	day03.NewHelloRouter(app, s)
