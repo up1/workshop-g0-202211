@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var server = flag.String("server", ":3000", "Host") 
+var server = flag.String("server", ":3000", "Host")
 
 func main() {
 	flag.Parse()
@@ -28,7 +28,7 @@ func main() {
 		_ = app.Shutdown()
 	}()
 
-   // init dependency
+	// init dependency
 	r := day03.HelloRepository{}
 	s := day03.NewService(r)
 

@@ -18,21 +18,25 @@ func Hello(s HelloSevice) func(c *fiber.Ctx) error {
 
 // Service
 type HelloSevice struct {
-	r HelloRepository
+	r IRepository
 }
 
 func (s HelloSevice) doSth() string {
-	return s.r.getDataFromDb()
+	return s.r.GetDataFromDb()
 }
 
-func NewService(r HelloRepository) HelloSevice {
+func NewService(r IRepository) HelloSevice {
 	return HelloSevice{r: r}
 }
 
 // Repository
+type IRepository interface {
+	GetDataFromDb() string
+}
+
 type HelloRepository struct {
 }
 
-func (r HelloRepository) getDataFromDb() string {
+func (r HelloRepository) GetDataFromDb() string {
 	panic("Under construction !!")
 }
