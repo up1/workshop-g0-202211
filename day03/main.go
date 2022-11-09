@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
+	"os/signal"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -10,6 +13,14 @@ import (
 func main() {
 	app := fiber.New()
 	app.Use(recover.New())
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		<-c
+		fmt.Println("Gracefully shutting down...")
+		_ = app.Shutdown()
+	}()
 
 	app.Get("/", hello)
 	app.Get("/panic", withPanic)
