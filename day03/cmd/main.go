@@ -28,6 +28,7 @@ func main() {
 	go func() {
 		<-c
 		fmt.Println("Gracefully shutting down...")
+		day03.DisconnectMongoDB(client)
 		_ = app.Shutdown()
 	}()
 
