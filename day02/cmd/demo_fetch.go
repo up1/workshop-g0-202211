@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+type XXX func(i int) string
+
 type result struct {
 	string
 	bool
@@ -13,7 +15,7 @@ type result struct {
 func main(){
 	urls := []string{
 		"https://www.google.com",
-		"https://www.somkiat.cc",
+		"https://www.somkiat.ccc",
 	}
 
 	resultChannel := make(chan result)
