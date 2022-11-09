@@ -8,8 +8,8 @@ import (
 
 type conn struct{}
 
-type hello struct{
-  c conn
+type hello struct {
+	c conn
 }
 
 func (h hello) helloHandler3(w http.ResponseWriter, req *http.Request) {
@@ -20,7 +20,7 @@ func main() {
 
 	// Connect to db
 	c := conn{}
-	h := hello {c: c}
+	h := hello{c: c}
 	http.HandleFunc("/hello", h.helloHandler3)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
