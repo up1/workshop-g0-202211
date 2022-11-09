@@ -19,7 +19,7 @@ func main() {
 	client := demo.NewMongoClient(*url)
 
 // Tracer
-tp, err := demo.InitTracer("http://zipkin:9411/api/v2/spans", "demo-api")
+tp, err := demo.InitTracer("http://128.199.205.113:9411/api/v2/spans", "demo-api")
 if err != nil {
 	log.Fatal(err)
 }
