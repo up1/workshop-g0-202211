@@ -1,7 +1,11 @@
 package day03
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -41,7 +45,15 @@ type HelloRepository struct {
 	Client *mongo.Client
 }
 
+type Demo struct{
+	Message string  `bson:"message,omitempty"`
+}
+
 func (r HelloRepository) GetDataFromDb() string {
-	// TODO
-	panic("Under construction !!")
+	// TODO :: demo_collection
+	c := r.Client.Database("test").Collection("demo_collection")
+	var result Demo
+	c.FindOne(context.TODO(), bson.D{}).Decode(&result)
+	fmt.Println(result)
+	return result.Message
 }
