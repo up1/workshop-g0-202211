@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -16,6 +17,15 @@ func main() {
 	// Connect to mongodb
 	flag.Parse()
 	client := demo.NewMongoClient(*url)
+
+// Tracer
+tp, err := demo.InitTracer("http://zipkin:9411/api/v2/spans", "demo-api")
+if err != nil {
+	log.Fatal(err)
+}
+defer func ()  {
+	tp.Shutdown(context.Background())
+}()
 
 	app := demo.NewRouter()
 	demo.NewHello(app, client)
