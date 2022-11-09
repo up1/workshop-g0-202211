@@ -9,19 +9,18 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func NewMongoClient(url string) *mongo.Client {
+func NewMongoClient(url string) (*mongo.Client, error) {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(url))
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
-		panic(err)
+		return nil, err
 	}
 	fmt.Println("Successfully connected and pinged.")
-	return client
+	return client, nil
+}
+
+func Disconnect(client *mongo.Client) {
+	client.Disconnect(context.TODO())
 }

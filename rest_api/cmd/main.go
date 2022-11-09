@@ -16,7 +16,7 @@ var url = flag.String("url", "mongodb://user:pass@128.199.205.113:27017", "Host"
 func main() {
 	// Connect to mongodb
 	flag.Parse()
-	client := demo.NewMongoClient(*url)
+	client, _ := demo.NewMongoClient(*url)
 
 	// Logging
 	demo.InitializeLogger()
@@ -32,6 +32,7 @@ func main() {
 
 	app := demo.NewRouter()
 	demo.NewHello(app, client)
+	demo.NewHealthCheck(app)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
