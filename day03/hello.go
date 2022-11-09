@@ -2,41 +2,37 @@ package day03
 
 import "github.com/gofiber/fiber/v2"
 
-func NewHelloRouter(app *fiber.App) {
-	app.Get("/", Hello)
+func NewHelloRouter(app *fiber.App, s HelloSevice) {
+	app.Get("/", Hello(s))
 }
-// Controller or Handler
-func Hello(c *fiber.Ctx) error {
-	r := helloRepository{}
-	s := NewService(r)
-	msg := s.doSth()
 
-	return c.JSON(fiber.Map{
-		"message": msg,
-	})
+// Controller or Handler
+func Hello(s HelloSevice) func(c *fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		msg := s.doSth()
+		return c.JSON(fiber.Map{
+			"message": msg,
+		})
+	}
 }
 
 // Service
-type helloSevice struct {
-	r helloRepository
+type HelloSevice struct {
+	r HelloRepository
 }
 
-func (s helloSevice) doSth() string {
+func (s HelloSevice) doSth() string {
 	return s.r.getDataFromDb()
 }
 
-func NewService(r helloRepository) helloSevice {
-	return helloSevice{r: r}
+func NewService(r HelloRepository) HelloSevice {
+	return HelloSevice{r: r}
 }
-
 
 // Repository
-type helloRepository struct {
+type HelloRepository struct {
 }
 
-func (r helloRepository) getDataFromDb() string {
+func (r HelloRepository) getDataFromDb() string {
 	panic("Under construction !!")
 }
-
-
-

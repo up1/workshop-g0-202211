@@ -28,7 +28,11 @@ func main() {
 		_ = app.Shutdown()
 	}()
 
-	day03.NewHelloRouter(app)
+   // init dependency
+	r := day03.HelloRepository{}
+	s := day03.NewService(r)
+
+	day03.NewHelloRouter(app, s)
 	app.Get("/panic", withPanic)
 
 	log.Fatal(app.Listen(*server))

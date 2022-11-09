@@ -12,7 +12,10 @@ import (
 
 func TestSuccesswithHelloHandler(t *testing.T) {
 	app := day03.NewFiberRouter()
-	day03.NewHelloRouter(app)
+	// init dependency
+	r := day03.HelloRepository{}
+	s := day03.NewService(r)
+	day03.NewHelloRouter(app, s)
 	// Call Target endpoint
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	res, _ := app.Test(req, -1)
