@@ -21,6 +21,7 @@ func main() {
 		_ = app.Shutdown()
 	}()
 
+	day03.NewHelloRouter(app)
 	app.Get("/panic", withPanic)
 
 	log.Fatal(app.Listen(":3000"))

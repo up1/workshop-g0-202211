@@ -6,13 +6,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestSuccesswithHelloHandler(t *testing.T) {
-	app := fiber.New()
-	app.Get("/", day03.Hello)
+	app := day03.NewFiberRouter()
+	day03.NewHelloRouter(app)
 	// Call Target endpoint
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	res, _ := app.Test(req, -1)
