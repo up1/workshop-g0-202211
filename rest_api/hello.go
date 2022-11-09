@@ -6,6 +6,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	oteltrace "go.opentelemetry.io/otel/trace"
+	"go.uber.org/zap"
 )
 
 func NewHello(app *fiber.App, client *mongo.Client) {
@@ -19,6 +20,8 @@ func helloHandler(client *mongo.Client) fiber.Handler {
 
 		_, span := tracer.Start(c.Context(), "helloHandler", oteltrace.WithAttributes(attribute.String("layer", "handler")))
 		defer span.End()
+
+		Logger.Info("demo", zap.String("traceId", span.SpanContext().TraceID().String()))
 
 		return c.JSON(fiber.Map{
 			"message": "Hello API",
