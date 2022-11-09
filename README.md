@@ -1,6 +1,7 @@
 # workshop-g0-202211
+* [Miro board](https://miro.com/app/board/uXjVPGLIDMI=/?share_link_id=461873118714)
 
-## Day01
+## Day 1
 * Install
 * Run, build, test
 * Basic
@@ -37,7 +38,7 @@ $go test ./...
 $go test ./... -v --cover
 ```
 
-## Day02
+## Day 2
 * Go tools
   * run and build
   * testing and coverage
@@ -49,3 +50,17 @@ $go test ./... -v --cover
 * Stringer interface
 * Defer, panic and recovery
 * Go routine and channel + WaitGroup
+
+## Day 3
+* Develop REST API with Fiber
+  * Server
+  * Router and middleware
+  * Testing with `net/http/httptest` and Fiber
+* Manage dependency
+  * Global variable
+  * Dependency Injection with Anonymous function
+  * Dependency Injection with Struct
+  * Context
+* Working with Dependency
+  * MongoDB
+  * Redis
