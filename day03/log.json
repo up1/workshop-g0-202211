@@ -1,0 +1,1 @@
+{"level":"info","ts":"2022-11-10T10:55:38.797+0700","caller":"cmd/main.go:23","msg":"failed to fetch URL","url":"xxxx.com","attempt":3,"backoff":1}

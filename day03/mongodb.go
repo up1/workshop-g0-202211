@@ -14,7 +14,7 @@ func NewMongoClient(url string) *mongo.Client {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
 		panic(err)
 	}

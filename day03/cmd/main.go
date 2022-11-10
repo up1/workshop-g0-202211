@@ -7,14 +7,24 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
 )
 
 var server = flag.String("server", ":3000", "Host")
 
 func main() {
 	flag.Parse()
+
+	day03.InitializeLogger()
+
+	day03.Logger.Info("failed to fetch URL",
+		zap.String("url", "xxxx.com"),
+		zap.Int("attempt", 3),
+		zap.Duration("backoff", time.Second),
+	)
 
 	client := day03.NewMongoClient("mongodb://user:pass@128.199.205.113:27017")
 

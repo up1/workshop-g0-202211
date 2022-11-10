@@ -45,8 +45,8 @@ type HelloRepository struct {
 	Client *mongo.Client
 }
 
-type Demo struct{
-	Message string  `bson:"message,omitempty"`
+type Demo struct {
+	Message string `bson:"message,omitempty"`
 }
 
 func (r HelloRepository) GetDataFromDb() string {
