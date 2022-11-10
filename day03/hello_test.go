@@ -1,6 +1,7 @@
 package day03_test
 
 import (
+	"context"
 	"day03"
 	"io"
 	"net/http"
@@ -31,7 +32,7 @@ func TestSuccesswithHelloHandler(t *testing.T) {
 
 type StubRepository struct{}
 
-func (r StubRepository) GetDataFromDb() string {
+func (r StubRepository) GetDataFromDb(context.Context) string {
 	return "From stub"
 }
 

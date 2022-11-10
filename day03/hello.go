@@ -7,16 +7,25 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
+	oteltrace "go.opentelemetry.io/otel/trace"
 )
 
 func NewHelloRouter(app *fiber.App, s HelloSevice) {
 	app.Get("/", Hello(s))
 }
 
+var tracer = otel.Tracer("demo-api")
+
 // Controller or Handler
 func Hello(s HelloSevice) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
-		msg := s.doSth()
+
+		ctx, span := tracer.Start(c.UserContext(), "helloHandler", oteltrace.WithAttributes(attribute.String("layer", "handler")))
+		defer span.End()
+
+		msg := s.doSth(ctx)
 		return c.JSON(fiber.Map{
 			"message": msg,
 		})
@@ -28,8 +37,10 @@ type HelloSevice struct {
 	r IRepository
 }
 
-func (s HelloSevice) doSth() string {
-	return s.r.GetDataFromDb()
+func (s HelloSevice) doSth(ctx context.Context) string {
+	ctx, span := tracer.Start(ctx, "HelloSevice.doSth")
+	defer span.End()
+	return s.r.GetDataFromDb(ctx)
 }
 
 func NewService(r IRepository) HelloSevice {
@@ -38,7 +49,7 @@ func NewService(r IRepository) HelloSevice {
 
 // Repository
 type IRepository interface {
-	GetDataFromDb() string
+	GetDataFromDb(ctx context.Context) string
 }
 
 type HelloRepository struct {
@@ -49,11 +60,13 @@ type Demo struct {
 	Message string `bson:"message,omitempty"`
 }
 
-func (r HelloRepository) GetDataFromDb() string {
+func (r HelloRepository) GetDataFromDb(ctx context.Context) string {
 	// TODO :: demo_collection
 	c := r.Client.Database("test").Collection("demo_collection")
 	var result Demo
 	c.FindOne(context.TODO(), bson.D{}).Decode(&result)
 	fmt.Println(result)
+	_, span := tracer.Start(ctx, "HelloRepository.GetDataFromDb")
+	defer span.End()
 	return result.Message
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"day03"
 	"flag"
 	"fmt"
@@ -17,6 +18,15 @@ var server = flag.String("server", ":3000", "Host")
 
 func main() {
 	flag.Parse()
+
+	// Init tracer
+	tp, err := day03.InitTracer("http://128.199.205.113:9411/api/v2/spans", "demo-api")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func() {
+		tp.Shutdown(context.Background())
+	}()
 
 	day03.InitializeLogger()
 
