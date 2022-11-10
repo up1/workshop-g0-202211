@@ -10,6 +10,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	oteltrace "go.opentelemetry.io/otel/trace"
+	"go.uber.org/zap"
 )
 
 func NewHelloRouter(app *fiber.App, s HelloSevice) {
@@ -24,6 +25,9 @@ func Hello(s HelloSevice) func(c *fiber.Ctx) error {
 
 		ctx, span := tracer.Start(c.UserContext(), "helloHandler", oteltrace.WithAttributes(attribute.String("layer", "handler")))
 		defer span.End()
+
+		Logger.Info("demo", zap.String("traceId",
+			span.SpanContext().TraceID().String()))
 
 		msg := s.doSth(ctx)
 		return c.JSON(fiber.Map{
@@ -40,6 +44,8 @@ type HelloSevice struct {
 func (s HelloSevice) doSth(ctx context.Context) string {
 	ctx, span := tracer.Start(ctx, "HelloSevice.doSth")
 	defer span.End()
+	Logger.Info("HelloSevice", zap.String("traceId",
+		span.SpanContext().TraceID().String()))
 	return s.r.GetDataFromDb(ctx)
 }
 
@@ -68,5 +74,9 @@ func (r HelloRepository) GetDataFromDb(ctx context.Context) string {
 	fmt.Println(result)
 	_, span := tracer.Start(ctx, "HelloRepository.GetDataFromDb")
 	defer span.End()
+
+	Logger.Info("HelloSevice", zap.String("traceId",
+		span.SpanContext().TraceID().String()))
+
 	return result.Message
 }
