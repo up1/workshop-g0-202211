@@ -11,8 +11,7 @@ func main() {
 		"http://www.google.com",
 		"http://www.somkiat.cc",
 	}
-
-	results := mock.CheckAllWebs(websites)
+	results := mock.CheckAllWebs(mock.CheckWeb, websites)
 
 	for url, ok := range results {
 		fmt.Println(url, " : ", ok)
