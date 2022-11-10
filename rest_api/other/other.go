@@ -5,8 +5,6 @@ import (
 	"go.opentelemetry.io/otel"
 )
 
-
-
 func NewOther(app *fiber.App) {
 	app.Get("/", otherHandler)
 }
